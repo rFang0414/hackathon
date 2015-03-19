@@ -47,3 +47,10 @@ gem 'bootstrap-sass', '~> 3.3.3'
 
 gem 'bootstrap-datepicker-rails'
 
+
+group :test, :development do
+  gem 'pry', '~> 0.10.1'
+  gem 'pry-stack_explorer', '~> 0.4.9.2'
+  gem 'pry-byebug', '~> 3.0.1'
+end
+
