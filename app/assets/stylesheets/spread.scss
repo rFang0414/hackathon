@@ -1,16 +1,39 @@
 // Place all the styles related to the spread controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-
-
-.play_user_infor button{
-    width: 49%;
+.play_user_infor button {
+  width: 49%;
 }
 
-.resume_button button{
-   width: 49%; 
+.resume_button button {
+  width: 49%;
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  font-size: 20px;
+  color: #fff;
+  line-height: 100px;
+  text-align: center;
+  background: #2fff00
+}
+
+.glyphicon-arrow-down {
+  font-size: 90px;
+}
+
+.node{
+  margin: auto;
+  width: 100px;
+}
+
+.tel{
+  text-align: center;
+  display: block;
+  width: 100%;
 }

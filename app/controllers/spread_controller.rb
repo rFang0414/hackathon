@@ -15,17 +15,33 @@ class SpreadController < ApplicationController
       job_id = params[:job_id]
       previous_id = decode(node_id)
 
-      node = Node.create(previous_id:previous_id,user_phone:user_phone,job_id:job_id)
+      node = Node.find_by(user_phone:user_phone,job_id:job_id)
+      node = Node.create(previous_id:previous_id,user_phone:user_phone,job_id:job_id) if node.blank?
       new_node_id = encode(node.id.to_s)
 
-      Player.create(name:user_phone,phone:user_phone)
+      player = Player.find_or_initialize_by(phone:user_phone)
+      player.update(name:user_name)
 
       redirect_to '/spread/job/' + job_id + "?node_id=" + new_node_id
     end
 
 
-    def generate_list_node
+    def generate_list_node(node_id)
+      tree_nodes = []
+      while node_id != '0'
+        tree_node = {}
+        node = Node.find_by(id:node_id)
+        user = Player.find_by(phone:node.user_phone)
+        tree_node[:name] = user.name
+        tree_node[:phone] = user.phone
 
+        node_id = node.previous_id
+        tree_nodes << tree_node
+      end
+      tree_nodes
     end
 
+    def tree
+      @tree = generate_list_node(4).to_json
+    end
 end
