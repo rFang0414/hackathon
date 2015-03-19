@@ -16,20 +16,11 @@
     <div class="job_description_requirement">
       <div class="description">
       <div><h5>Job Description:</h5></div>
-      <div><%=@job.job_description%></div>
-      1、负责大数据投资研究平台等系统的产品规划和需求分析；<br/>
-      2、将用户需求转化为可实现的产品功能，撰写详细的产品文档；<br/>
-      3、推动产品的跨部门合作，并确保预期目标的实现；<br/>
-      4、引导完成产品的界面、功能、流程设计，推动及协调产品的开发进度，把控项目质量；<br/>
-      5、收集用户反馈，根据反馈提出产品优化建议，并落地实施。<br/>
+      <div><%=@job.job_description.gsub("/n","<br/>")%></div>
       </div>
       <div class="requirement">
       <div><h5>Requirements:</h5></div>
-      <div><%=@job.job_requirement%></div>
-      1、3-5年工作经验，有网站和移动端产品设计经验优先，有金融行业/财经资讯行业相关背景者优先；<br/>
-      2、熟练使用产品设计工具，撰写产品设计文档，设计页面原型；<br/>
-      3、具有对市场发展趋势有敏锐的洞察力、创新意识，有很强的学习和分析能力；<br/>
-      4、良好的跨部门沟通能力和团队协作能力及敬业精神。<br/>
+      <div><%=@job.job_requirement.gsub("/n","<br/>")%></div>
       </div>
     </div>
 
@@ -47,6 +38,8 @@
           <button type="button" class="btn btn-default">Apply</button>
           <button type="button" class="btn btn-default">Share</button>
         </div>
+
+        <%= render partial: 'share_job'  %>
       </div>
 
       <div class="play_resume">
@@ -112,3 +105,4 @@
     </script>
 
 <div>
+

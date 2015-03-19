@@ -56,6 +56,6 @@ Rails.application.routes.draw do
 
   get 'spread/job/:id' => 'spread#get_job'
   match 'spread/resume/:id' , to: 'spread#my_resume' , via: [:get, :post]
-
+  post 'spread/job/share', to: 'spread#share'
   #match 'photos', to: 'photos#show', via: [:get, :post]
 end
