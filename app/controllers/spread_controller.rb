@@ -2,6 +2,8 @@ class SpreadController < ApplicationController
     def get_job
       @job = Job.find_by(id: params[:id].to_i)
       @node_id = params[:node_id].blank? ? encode("0") : params[:node_id]
+
+      @resume = Resume.new
     end
 
     def my_resume
@@ -26,6 +28,10 @@ class SpreadController < ApplicationController
 
     def generate_list_node
 
+    end
+
+    def remote_update_resume
+        render :nothing => true
     end
 
 end

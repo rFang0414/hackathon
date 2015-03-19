@@ -14,3 +14,74 @@
 .resume_button button{
    width: 49%; 
 }
+
+.job_poster, .job_basic, .job_description_requirement
+{
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 15px;
+}
+
+.job_poster
+{
+    padding-top: 15px;
+}
+
+.job_basic
+{
+    font-size: small;
+    // color: grey;
+}
+
+.border
+{
+    background-color: rgb(195, 195, 195);
+    height: 10px;
+}
+
+.play_user_infor
+{
+    position: fixed;
+    /* bottom: 25px; */
+    z-index: 1000;
+    bottom: 0px;
+    width: 100%;
+    /* padding-left: 15px; */
+}
+
+.share_content_button button
+{
+    width: 49.4%; 
+    //@border-radius: 0px !important;
+}
+
+.share_content input
+{
+    //width: 49.4%; 
+    border-radius: 0px !important;
+}
+
+.share_content
+{
+  border-top-color: rgb(92, 184, 92);
+  border-top-style: solid;
+  border-left-color: rgb(92, 184, 92);
+  border-left-style: solid;
+  border-right-color: rgb(92, 184, 92);
+  border-right-style: solid;
+border-width: thin;
+}
+
+.play_content
+{
+    display:none;
+}
+
+.job_content
+{
+    padding-bottom: 110px;
+}
+
+
+  
+

@@ -1,58 +1,115 @@
-<div class="container">
-    <div>
-      <div><span>张海涛 **.zhang@careerbuilder.com</span></div>
-      <div><span>Posted on 2015-12-12</span></div>
-    </div>
-    <div class="job_basic">
-        <div class="title"><h5><%=@job.job_title%></h5></div>
-        <div class="row">
-            <div class="col-xs-6">Company: <%=@job.company_name%></div><div class="col-xs-6">Experience：<%=@job.required_experience%></div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">Salary：<%=@job.salary%>K</div><div class="col-xs-6">Salary：<%=@job.job_type%>K</div>
-        </div>
-        <div>Address: <%=@job.address%></div>
-    </div>
-    <div class="job_description_requirement">
-      <div class="description">
-      <div><h5>Job Description:</h5></div>
-      <div><%=@job.job_description.gsub("/n","<br/>")%></div>
+<div class="container_me">
+ 
+    <div class="job_content">
+      <div class="job_poster block">
+        <div><span>张海涛 **.zhang@careerbuilder.com</span></div>
+        <div><span>Posted on 2015-12-12</span></div>
       </div>
-      <div class="requirement">
-      <div><h5>Requirements:</h5></div>
-      <div><%=@job.job_requirement.gsub("/n","<br/>")%></div>
+      <div class="border"></div>
+      <div class="job_basic block">
+          <div class="title"><h5><%=@job.job_title%></h5></div>
+
+          <div class="row">
+              <div class="col-xs-6">Experience: <%=@job.required_experience%></div>
+              <div class="col-xs-6">Salary: <%=@job.salary%>K</div>
+          </div>
+          <div class="">Company: <%=@job.company_name%></div>
+          <div>Address: <%=@job.address%></div>
+          
+          <!--<div class="row">
+              <div class="col-xs-6">Salary：<%=@job.job_type%></div>
+          </div>-->
       </div>
+
+      <div class="border"></div>
+
+      <div class="job_description_requirement block">
+        <div class="description">
+        <div><h5>Job Description:</h5></div>
+        <%#binding.pry%>
+        <div><%=@job.job_description.gsub("\n","<br/>").html_safe%></div>
+        </div>
+        <div class="requirement">
+        <div><h5>Requirements:</h5></div>
+        <div><%=@job.job_requirement.gsub("\n","<br/>").html_safe%></div>
+        </div>
+      </div>
+     
     </div>
+    
 
 
-    <button type="button" class="btn btn-default btn-block">Apply & Share</button>
-
-
-    <div class="play_content">
-
-      <div class="play_user_infor">
-        <input type="text" class="form-control" placeholder="姓名">
+    <div class="play_user_infor">
+        <!--<input type="text" class="form-control" placeholder="姓名">
         <input type="password" class="form-control" placeholder="手机号">
       
         <div>
           <button type="button" class="btn btn-default">Apply</button>
           <button type="button" class="btn btn-default">Share</button>
-        </div>
+        </div>-->
 
         <%= render partial: 'share_job'  %>
-      </div>
+    </div>
 
+    <div class="play_content">
       <div class="play_resume">
-        <div class="resume_basic">
+
+        <%= form_for @resume,url: {action: "remote_update_resume"}, html: {:method=>"post",:multipart=>"true",:remote=>"true"} do |f| %>
+
+          <div class="resume_basic">
           <div><h5>Basic Information</h5></div>
-          <div class="row">
-            <div class="col-xs-6">Name: Lian Shenghua</div><div class="col-xs-6">Work Experience: 3年</div>
-            <div class="col-xs-6">City: Shanghai</div><div class="col-xs-6">Email: lian.winfa@gmail.com</div>
-            <div class="col-xs-6">Phone: 18616769617</div><div class="col-xs-6"></div>
+          <div>
+            <%= f.text_field :name, :class => "form-control", :placeholder => "Name"%>
+            <%= f.text_field :experience_year, :class => "form-control", :placeholder => "Experience Year"%>
+            <%= f.text_field :city, :class => "form-control", :placeholder => "City"%>
+            <%= f.text_field :email, :class => "form-control", :placeholder => "Email"%>
           </div>
         </div>
 
+
         <div class="resume_work_experience">
+          <div><h5>Work Experience</h5></div>
+          <div>
+            <%= f.text_field :position_title, :class => "form-control", :placeholder => "Job Title"%>
+            <%= f.text_field :company_name, :class => "form-control", :placeholder => "Company Name"%>
+            
+            <!--<%= f.month_field :work_start_date, :class => "form-control", :value => "2015-01"%>
+            <%= f.month_field :work_end_date, :class => "form-control", :value => "2015-01"%>-->
+
+            <div class="input-daterange input-group form-group" id="datepicker">
+              <%= f.text_field :work_start_date, :class => "form-control", :placeholder => "Start"%>
+              <span class="input-group-addon">to</span>
+              <%= f.text_field :work_end_date, :class => "form-control", :placeholder => "End"%>
+            </div>
+
+            <%= f.text_area :job_brief_description, :class => "form-control", :rows=>"4", :placeholder => "Desciption of your job"%>
+          </div>
+        </div>
+
+        <div class="resume_education">
+          <div><h5>Education</h5></div>
+          <div>
+            <%= f.text_field :degree, :class => "form-control", :placeholder => "Degree"%>
+            <%= f.text_field :school_name, :class => "form-control", :placeholder => "School Name"%>
+            
+            <!--<%= f.month_field :school_start_date, :class => "form-control", :value => "2015-01"%>
+            <%= f.month_field :school_end_date, :class => "form-control", :value => "2015-01"%>-->
+
+            <div class="input-daterange input-group form-group" id="datepicker">
+              <%= f.text_field :school_start_date, :class => "form-control", :placeholder => "Start"%>
+              <span class="input-group-addon">to</span>
+              <%= f.text_field :school_end_date, :class => "form-control", :placeholder => "End"%>
+            </div>
+
+            <%= f.text_area :school_brief_description, :class => "form-control", :rows=>"4", :placeholder => "Desciption of your job"%>
+          </div>
+        </div>
+
+        <% end %>
+
+        
+
+        <!--<div class="resume_work_experience">
           <div><h5>Work Experience</h5></div>
           <div>
             <input type="text" class="form-control" placeholder="Job Title" />  
@@ -93,16 +150,19 @@
           <button type="button" class="btn btn-default">Save Resume</button>
         </div>
 
-      </div>
+      </div>-->
 
     </div>
 
     <script type='text/javascript'>
       $('.input-daterange').datepicker({
        format: "yyyy-mm",
-        minViewMode: 1,
+        minViewMode: 1
       });
+
+    
+
     </script>
 
-<div>
+</div>
 
