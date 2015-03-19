@@ -53,4 +53,9 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  get 'spread/job/:id' => 'spread#get_job'
+  match 'spread/resume/:id' , to: 'spread#my_resume' , via: [:get, :post]
+
+  #match 'photos', to: 'photos#show', via: [:get, :post]
 end
