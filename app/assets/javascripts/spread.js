@@ -13,6 +13,11 @@ jQuery(function(){
     jQuery(".btn_apply_job").click(function(){
         RemoteCheckResume();
     });
+
+    jQuery(".btn_save_resume").bind('ajax:success', function(evt, data, status, xhr) {
+        jQuery(".play_content").hide();
+        jQuery(".apply-success").show();
+    });
 });
 
 function RemoteCheckResume(){

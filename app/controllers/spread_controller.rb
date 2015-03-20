@@ -65,8 +65,8 @@ class SpreadController < ApplicationController
 
     def remote_update_resume
         resume = Resume.create(params.permit![:resume])
-        Application.create(job_id:params[:job_id],node_id:decode(params[:node_id]),resume_id:resume.id)
-        render :nothing => true
+        application = Application.create(job_id:params[:job_id],node_id:decode(params[:node_id]),resume_id:resume.id)
+        render :text => !application.blank?
     end
 
     def tree
@@ -84,8 +84,8 @@ class SpreadController < ApplicationController
     end
 
     def remote_apply
-      resume = Resume.find_by(phone_number: param[:telephone])
-      application = Application.create(job_id:params[:job_id],node_id:params[:node_id],resume_id:resume.id)
+      resume = Resume.find_by(phone_number: params[:telephone])
+      application = Application.create(job_id:params[:job_id],node_id:decode(params[:node_id]),resume_id:resume.id)
       render :text => !application.blank?
     end
 
