@@ -78,8 +78,11 @@ class SpreadController < ApplicationController
 
         resume = Resume.find_by(phone_number: phone)
         has_resume = resume.blank? ? "false" : "true"
-        Application.find_or_initialize_by(job_id:params[:job_id],node_id:decode(params[:node_id]),resume_id:resume.id) if has_resume == "true"
-        render json: {:has_resume => has_resume}.to_json
+        if has_resume == "true"
+          application = Application.find_by(job_id:params[:job_id],resume_id:resume.id)
+          Application.find_by(job_id:params[:job_id],node_id:params[:node_id],resume_id:resume.id) if application.blank?
+        end
+        render json: {:has_resume => has_resume, :applied => !application.blank?}.to_json
     end
 
 end
