@@ -53,24 +53,23 @@ ActiveRecord::Schema.define(version: 20150319162043) do
   end
 
   create_table "resumes", force: :cascade do |t|
-    t.string   "name",                       limit: 255
-    t.string   "email",                      limit: 255
-    t.string   "city",                       limit: 255
-    t.string   "experience_year",            limit: 255
-    t.string   "school_name",                limit: 255
-    t.string   "company_name",               limit: 255
-    t.string   "degree",                     limit: 255
-    t.string   "phone_number",               limit: 255
+    t.string   "name",                     limit: 255
+    t.string   "email",                    limit: 255
+    t.string   "city",                     limit: 255
+    t.string   "experience_year",          limit: 255
+    t.string   "school_name",              limit: 255
+    t.string   "company_name",             limit: 255
+    t.string   "degree",                   limit: 255
+    t.string   "phone_number",             limit: 255
     t.date     "school_start_date"
     t.date     "school_end_date"
     t.date     "work_start_date"
     t.date     "work_end_date"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.text     "position_brief_description", limit: 65535
-    t.text     "job_brief_description",      limit: 65535
-    t.text     "school_brief_description",   limit: 65535
-    t.string   "position_title",             limit: 255
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.text     "job_brief_description",    limit: 65535
+    t.text     "school_brief_description", limit: 65535
+    t.string   "position_title",           limit: 255
   end
 
 end

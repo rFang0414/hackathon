@@ -17,12 +17,16 @@ jQuery(function(){
 
 function RemoteCheckResume(){
     var phone = jQuery("#node_phone").val();
+    var node_id = jQuery('#node_id').val();
+    var job_id = jQuery('#job_id').val();
     if (phone != ""){
         $.ajax({
             url: '../remote/check/resume',
             method: 'POST',
             data: {
-                "telephone": phone
+                "telephone": phone,
+                "node_id": node_id,
+                "job_id": job_id
             },
             
             success: function(data) {
@@ -33,10 +37,10 @@ function RemoteCheckResume(){
                 {
                     if (!data.has_application)
                     {
-
+                        HasResumeView();
                     }else
                     {
-
+                        HasApplicationView();
                     }
                 }
             },
@@ -50,27 +54,68 @@ function RemoteCheckResume(){
 }
 
 function NewResumeView(){
-    jQuery(".play_content").show();
-    jQuery(".play_user_infor").hide();
-    window.scrollTo(0,jQuery(".play_content").offset().top-20);
-
-    jjQuery(".has_resume").hide();
+    jQuery(".has_resume").hide();
     jQuery(".new_resume").show();
     jQuery(".has_application").hide();    
+
+    $('#myModal').modal('show');
+
+    jQuery(".modal_btn").click(function(){
+        jQuery(".play_content").show();
+        jQuery(".play_user_infor").hide();
+        window.scrollTo(0,jQuery(".play_content").offset().top-20);
+
+        jQuery("#resume_name").val(jQuery("#node_name").val());
+        jQuery("#resume_phone_number").val(jQuery("#node_phone").val());
+    });
 }
 
 function HasResumeView(){
-    jQuery(".play_user_infor").hide();
+    //jQuery(".play_user_infor").hide();
     jQuery(".has_resume").show();
     jQuery(".new_resume").hide();
     jQuery(".has_application").hide();
+
+    $('#myModal').modal('show');
+    jQuery(".modal_btn").click(function(){
+        RemoteApplyJob();
+    });
+    
 }
 
 function HasApplicationView(){
-    jQuery(".play_user_infor").hide();
-    jjQuery(".has_resume").hide();
+   // jQuery(".play_user_infor").hide();
+    jQuery(".has_resume").hide();
     jQuery(".new_resume").hide();
     jQuery(".has_application").show();
+
+    $('#myModal').modal('show');
+}
+
+function RemoteApplyJob(){
+    var phone = jQuery("#node_phone").val();
+    var node_id = jQuery('#node_id').val();
+    var job_id = jQuery('#job_id').val();
+
+    if ( node_id != "" && phone != "" && job_id != "")
+    {
+        $.ajax({
+            url: '../remote/apply',
+            method: 'POST',
+            data: {
+                "node_id": node_id,
+                "job_id": job_id,
+                "telephone": phone
+            },
+            
+            success: function(data) {
+            },
+            error: function(data) {
+            }
+
+        });
+
+    }
 }
 
 function RemoteGenerateShareLink(this_button){

@@ -10,7 +10,7 @@
           <div><span>Cick OK to continue.</span></div>
         </div>
         <div class="new_resume">
-          <div><span>You have never any resume yet, please create a resume to apply this job.</span></div>
+          <div><span>You never have any resume yet, please create a resume to apply this job.</span></div>
           <div><span>Cick OK to continue.</span></div>
         </div>
         <div class="has_application">
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-success modal_btn" data-dismiss="modal">OK</button>
       </div>
     </div>
   </div>
@@ -96,11 +96,13 @@
       <div class="play_resume">
 
         <%= form_for @resume,url: {action: "remote_update_resume"}, html: {:method=>"post",:multipart=>"true",:remote=>"true"} do |f| %>
-
+          <input type="text" hidden="hidden" id="job_id" name="job_id" value=<%= @job.id %>>
+          <input type="text" hidden="hidden" name="node_id" value=<%= @node_id %>>
           <div class="resume_basic">
           <div><h5>Basic Information</h5></div>
           <div>
             <%= f.text_field :name, :class => "form-control", :placeholder => "Name"%>
+            <%= f.text_field :phone_number, :class => "form-control", :placeholder => "Phone"%>
             <%= f.text_field :experience_year, :class => "form-control", :placeholder => "Experience Year"%>
             <%= f.text_field :city, :class => "form-control", :placeholder => "City"%>
             <%= f.text_field :email, :class => "form-control", :placeholder => "Email"%>
