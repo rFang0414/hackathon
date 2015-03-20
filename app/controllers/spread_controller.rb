@@ -76,7 +76,6 @@ class SpreadController < ApplicationController
     def remote_check_resume
         phone = params[:telephone]
         
-
         resume = Resume.find_by(phone_number: phone)
         has_resume = resume.blank? ? "false" : "true" 
         render json: {:has_resume => has_resume}.to_json

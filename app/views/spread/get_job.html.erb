@@ -1,3 +1,30 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="has_resume">
+          <div><span>We found you have a resume in our database, will apply this job via this resume. </span></div>
+          <div><span>Cick OK to continue.</span></div>
+        </div>
+        <div class="new_resume">
+          <div><span>You have never any resume yet, please create a resume to apply this job.</span></div>
+          <div><span>Cick OK to continue.</span></div>
+        </div>
+        <div class="has_application">
+          <div><span>You have already apllied this job, please view other jobs.</span></div>
+          <div><span>Cick OK to continue.</span></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container_me">
     <div id="maskLayer"></div>
     <div class="mask_remder">
@@ -59,7 +86,7 @@
 
     </div>
     
-
+      
 
     <div class="play_user_infor">
         <%= render partial: 'share_job'  %>
@@ -175,9 +202,6 @@
        format: "yyyy-mm",
         minViewMode: 1
       });
-
-    
-
     </script>
 
 </div>

@@ -86,14 +86,14 @@
   border-left-style: solid;
   border-right-color: rgb(92, 184, 92);
   border-right-style: solid;
-    border-width: 2px;
+  border-width: 2px;
 
-  display: none;
+  //display: none;
 }
 
 .play_content
 {
-    //display:none;
+    display:none;
 }
 
 .job_content
@@ -175,6 +175,16 @@
 .resume_basic, .resume_work_experience, .resume_education
 {
     margin-bottom: 25px;
+}
+
+.input-daterange input
+{
+    text-align: left !important;
+}
+
+#myModal
+{
+    padding-top: 50%;
 }
 
 

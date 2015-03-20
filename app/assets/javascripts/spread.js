@@ -26,16 +26,51 @@ function RemoteCheckResume(){
             },
             
             success: function(data) {
-                if (data.has_resume == "false")
+                if (!data.has_resume)
                 {
+                    NewResumeView();
+                } else 
+                {
+                    if (!data.has_application)
+                    {
 
-                } 
+                    }else
+                    {
+
+                    }
+                }
             },
             error: function(data) {
             }
 
         });
+    }else{
+        jQuery("#node_phone").attr("placeholder",jQuery("#node_phone").attr("placeholder") + " could not be empty!");
     }
+}
+
+function NewResumeView(){
+    jQuery(".play_content").show();
+    jQuery(".play_user_infor").hide();
+    window.scrollTo(0,jQuery(".play_content").offset().top-20);
+
+    jjQuery(".has_resume").hide();
+    jQuery(".new_resume").show();
+    jQuery(".has_application").hide();    
+}
+
+function HasResumeView(){
+    jQuery(".play_user_infor").hide();
+    jQuery(".has_resume").show();
+    jQuery(".new_resume").hide();
+    jQuery(".has_application").hide();
+}
+
+function HasApplicationView(){
+    jQuery(".play_user_infor").hide();
+    jjQuery(".has_resume").hide();
+    jQuery(".new_resume").hide();
+    jQuery(".has_application").show();
 }
 
 function RemoteGenerateShareLink(this_button){
