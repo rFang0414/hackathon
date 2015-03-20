@@ -69,7 +69,8 @@
       <div class="play_resume">
 
         <%= form_for @resume,url: {action: "remote_update_resume"}, html: {:method=>"post",:multipart=>"true",:remote=>"true"} do |f| %>
-
+          <input type="text" hidden="hidden" id="job_id" name="job_id" value=<%= @job.id %>>
+          <input type="text" hidden="hidden" name="node_id" value=<%= @node_id %>>
           <div class="resume_basic">
           <div><h5>Basic Information</h5></div>
           <div>

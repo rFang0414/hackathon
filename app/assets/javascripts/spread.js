@@ -17,12 +17,16 @@ jQuery(function(){
 
 function RemoteCheckResume(){
     var phone = jQuery("#node_phone").val();
+    var node_id = jQuery('#node_id').val();
+    var job_id = jQuery('#job_id').val();
     if (phone != ""){
         $.ajax({
             url: '../remote/check/resume',
             method: 'POST',
             data: {
-                "telephone": phone
+                "telephone": phone,
+                "node_id": node_id,
+                "job_id": job_id
             },
             
             success: function(data) {

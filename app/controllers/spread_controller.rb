@@ -65,7 +65,7 @@ class SpreadController < ApplicationController
 
     def remote_update_resume
         resume = Resume.create(params.permit![:resume])
-
+        Application.create(job_id:params[:job_id],node_id:decode(params[:node_id]),resume_id:resume.id)
         render :nothing => true
     end
 
@@ -75,10 +75,10 @@ class SpreadController < ApplicationController
 
     def remote_check_resume
         phone = params[:telephone]
-        
 
         resume = Resume.find_by(phone_number: phone)
-        has_resume = resume.blank? ? "false" : "true" 
+        has_resume = resume.blank? ? "false" : "true"
+        Application.find_or_initialize_by(job_id:params[:job_id],node_id:decode(params[:node_id]),resume_id:resume.id) if has_resume == "true"
         render json: {:has_resume => has_resume}.to_json
     end
 
