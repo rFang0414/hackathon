@@ -83,4 +83,10 @@ class SpreadController < ApplicationController
         render json: {:has_resume => has_resume, :has_application => !application.blank?}.to_json
     end
 
+    def remote_apply
+      resume = Resume.find_by(phone_number: param[:telephone])
+      application = Application.create(job_id:params[:job_id],node_id:params[:node_id],resume_id:resume.id)
+      render :text => !application.blank?
+    end
+
 end
