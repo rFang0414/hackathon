@@ -1,0 +1,16 @@
+<div class="node">
+
+</div>
+<script type="text/javascript">
+
+    var tree = <%= @tree.html_safe %>;
+    for(var i = 0; i<tree.length-1; i++)
+    {
+        $('.node').append('<div class="circle"><span>'+ tree[i]['name'] +'</span></div>')
+                .append('<span class="tel">' + tree[i]['phone'] + '</span><br />')
+                .append('<span class="glyphicon glyphicon-arrow-down"></span>');
+    }
+        $('.node').append('<div class="circle"><span>'+ tree[i]['name'] +'</span></div>')
+                .append('<span class="tel">' + tree[i]['phone'] + '</span><br />')
+
+</script>

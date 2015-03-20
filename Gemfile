@@ -54,3 +54,5 @@ group :test, :development do
   gem 'pry-byebug', '~> 3.0.1'
 end
 
+gem 'zeroclipboard-rails'
+

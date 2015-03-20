@@ -1,4 +1,26 @@
 <div class="container_me">
+    <div id="maskLayer"></div>
+    <div class="mask_remder">
+        <div>
+          <input type="hidden" id='share_link_text' value="hello" />
+          <span>
+          <div class="mask_remder_item">
+            <div class="mask_remder_item_title">1. Please make sure your phone number is right. </div>
+            <div class="mask_remder_item_content">
+            This is will help us to contact you when the person you recommended has got this job successfully. 
+            </div>
+          </div>
+          <div class="mask_remder_item">
+            <div class="mask_remder_item_title">2. You could get the share link by clicking the button &nbsp;&nbsp;&nbsp;&nbsp;below.</div>
+            <div class="mask_remder_item_content">
+            You can share this link in any places, like: Twiter, Facebook, LinkedIn, Wechat...
+            </div>
+          </div>
+        </span></div>
+        <button class='clip_share_link btn-xs btn btn-default' data-clipboard-target='share_link_text' data-clipboard-text='Default clipboard text from attribute' id='d_clip_button' title='Click me to copy to clipboard.'>
+        Copy Share Link To Clipboard
+      </button> 
+    </div>
  
     <div class="job_content">
       <div class="job_poster block">
@@ -34,20 +56,12 @@
         <div><%=@job.job_requirement.gsub("\n","<br/>").html_safe%></div>
         </div>
       </div>
-     
+
     </div>
     
 
 
     <div class="play_user_infor">
-        <!--<input type="text" class="form-control" placeholder="姓名">
-        <input type="password" class="form-control" placeholder="手机号">
-      
-        <div>
-          <button type="button" class="btn btn-default">Apply</button>
-          <button type="button" class="btn btn-default">Share</button>
-        </div>-->
-
         <%= render partial: 'share_job'  %>
     </div>
 

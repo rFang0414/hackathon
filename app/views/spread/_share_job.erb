@@ -1,14 +1,14 @@
 <form action="share" method="post">
     <div class="share_content">
-        <input hidden="hidden" name="node_id" value=<%= @node_id %>>
-          <input hidden="hidden"  name="job_id" value=<%= @job.id %>>
+          <input hidden="hidden" id= "node_id" name="node_id" value=<%= @node_id %>>
+          <input hidden="hidden" id= "node_job_id" name="job_id" value=<%= @job.id %>>
 
-          <input name="name" class="form-control" placeholder="Name">
-          <input name="telephone" class="form-control" placeholder="Phone" >
+          <div><input name="name" id="node_name" class="form-control" required placeholder="Name"></div>
+          <div><input name="telephone" id="node_phone" class="form-control" required placeholder="Phone" ></div>
           
           <div class="share_content_button btn-block">
-            <button type="button" class="btn btn-default btn-info">Apply</button>
-            <button type="submit" class="btn btn-default btn-success">Share</button>
+            <button type="button" class="btn btn-default btn-info btn_apply_job">Apply</button>
+            <button type="button" class="btn btn-default btn-success btn_share_job">Share</button>
           </div>
     </div>
 </form>
