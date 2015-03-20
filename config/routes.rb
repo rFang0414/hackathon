@@ -62,4 +62,5 @@ Rails.application.routes.draw do
   post 'spread/remote/resume/:id' => 'spread#remote_update_resume'
   get 'tree/test', to: 'spread#tree'
   post 'spread/remote/check/resume' => 'spread#remote_check_resume'
+  post 'spread/remote/apply' => 'spread#remote_apply'
 end
