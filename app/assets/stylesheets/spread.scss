@@ -87,11 +87,13 @@
   border-right-color: rgb(92, 184, 92);
   border-right-style: solid;
     border-width: 2px;
+
+  display: none;
 }
 
 .play_content
 {
-    display:none;
+    //display:none;
 }
 
 .job_content
@@ -153,4 +155,31 @@
     font-weight: bolder;
 }
 
+.play_resume input
+{
+    
+    //border-radius: 0;
+}
+
+.play_resume input
+{
+    margin-bottom: 15px;
+}
  
+.play_resume
+{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.resume_basic, .resume_work_experience, .resume_education
+{
+    margin-bottom: 25px;
+}
+
+
+
+
+
+
+

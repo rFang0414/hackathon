@@ -64,6 +64,8 @@ class SpreadController < ApplicationController
     end
 
     def remote_update_resume
+        resume = Resume.create(params.permit![:resume])
+
         render :nothing => true
     end
 
