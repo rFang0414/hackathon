@@ -120,16 +120,6 @@ class SpreadController < ApplicationController
     end
 
     def remote_test_apply
-      mailer = AmazonSes::Mailer.new(:access_key => "AKIAJXS5X7GZDEBIGPNA", 
-        :secret_key => "Mtqa7h61ORrz5njPeIlNB2Z/1Y9Q2UFPt0koA9K/")
-
-      mailer.deliver to: params[:email],
-                     from:'875369936@qq.com',
-                     subject:'Your application has been received.',
-                     body:'You have applied this job successfully.
-
-Thanks!
-Careerbuilder'
 
       render :text => params[:email]
     end
