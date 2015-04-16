@@ -1,7 +1,7 @@
 <%= form_for @job, url: {action: "poster_update_job"} do |f| %>
-  job_title:<%= f.text_field :job_title %> <br/>
-  job_description<%= f.text_field :job_description %> <br/>
-  required_experience<%= f.text_field :required_experience %> <br/>
-  job_requirement<%= f.text_field :job_requirement %> <br/>
+  job_title:<%= f.text_area :job_title %> <br/>
+  job_description<%= f.text_area :job_description %> <br/>
+  required_experience<%= f.text_area :required_experience %> <br/>
+  job_requirement<%= f.text_area :job_requirement %> <br/>
   <%= f.submit "Create" %>
 <% end %>
