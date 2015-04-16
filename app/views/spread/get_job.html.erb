@@ -64,10 +64,6 @@
           </div>
           <div class="">Company: <%=@job.company_name%></div>
           <div>Address: <%=@job.address%></div>
-          
-          <!--<div class="row">
-              <div class="col-xs-6">Salary：<%=@job.job_type%></div>
-          </div>-->
       </div>
 
       <div class="border"></div>
@@ -94,8 +90,20 @@
     
       
 
-    <div class="play_user_infor">
+    <div class="play_user_infor" style="display:none">
         <%= render partial: 'share_job'  %>
+    </div>
+
+    <div>
+        <div class="apply_input">
+          <div class="form-group">
+            <input type="email" class="form-control apply_email" placeholder="Email">
+          </div>
+          <button type="button" class="btn btn-block btn-default btn-info btn_email_apply">Apply</button>
+        </div>
+        <div>
+          <span class="glyphicon glyphicon-ok-sign apply_success" style="display:none"></span>
+        </div> 
     </div>
 
     <div class="play_content">
@@ -157,51 +165,6 @@
         <%= f.submit :class => "btn btn-default btn-block btn-success btn_save_resume",:value=>"Apply"%>
 
         <% end %>
-
-        
-
-        <!--<div class="resume_work_experience">
-          <div><h5>Work Experience</h5></div>
-          <div>
-            <input type="text" class="form-control" placeholder="Job Title" />  
-          </div>
-          <div>
-            <input type="text" class="form-control" placeholder="Company Name" />
-          </div>
-          <div class="input-daterange input-group form-group" id="datepicker">
-              <input type="text" class="form-control start_date" placeholder="Start" />
-              <span class="input-group-addon">to</span>
-              <input type="text" class="form-control end_date" placeholder="End" />
-          </div>
-          <div>
-            <textarea class="form-control" rows="5" placeholder="Desciption of your job"></textarea>
-          </div>
-        </div>
-
-        <div class="resume_education">
-          <div><h5>Education</h5></div>
-          <div>
-            <input type="text" class="form-control" placeholder="Degree" />  
-          </div>
-          <div>
-            <input type="text" class="form-control" placeholder="School Name" />
-          </div>
-          <div class="input-daterange input-group form-group" id="datepicker">
-              <input type="text" class="form-control start_date" placeholder="Start" />
-              <span class="input-group-addon">to</span>
-              <input type="text" class="form-control end_date" placeholder="End" />
-          </div>
-          <div>
-            <textarea class="form-control" rows="5" placeholder="Desciption in School"></textarea>
-          </div>
-        </div>
-
-        <div class="resume_button">
-          <button type="button" class="btn btn-default">Cancel Edit</button>
-          <button type="button" class="btn btn-default">Save Resume</button>
-        </div>
-
-      </div>-->
 
     </div>
 

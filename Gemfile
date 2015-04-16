@@ -56,3 +56,7 @@ end
 
 gem 'zeroclipboard-rails'
 
+gem 'amazon-ses-mailer', '~> 0.0.4'
+
+gem 'aws-sdk', '~> 2'
+

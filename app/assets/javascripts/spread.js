@@ -1,4 +1,21 @@
 jQuery(function(){
+    jQuery(".btn_email_apply").click(function(){
+        var email = jQuery(".apply_email").val();
+        $.ajax({
+            url: '../remote/test/apply',
+            method: 'POST',
+            data: {
+                "email": email
+            },
+            success:function(data){
+                //alert(data);
+                jQuery(".apply_input").hide();
+                jQuery(".apply_success").show();
+            }
+        });
+    });
+
+
     jQuery("#d_clip_button").click(function(){
       jQuery(this).text("Share link has been copied.");
     });

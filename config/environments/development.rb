@@ -38,4 +38,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # mailer = AmazonSes::Mailer.new(:access_key => "AKIAJXS5X7GZDEBIGPNA", :secret_key => "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")
+  # config.action_mailer.delivery_method = mailer
 end
