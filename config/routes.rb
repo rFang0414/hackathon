@@ -55,12 +55,17 @@ Rails.application.routes.draw do
   #   end
 
   get 'spread/job/:id' => 'spread#get_job'
+
+  get 'spread/poster/job/:id' => 'spread#poster_show_job'
+  patch 'spread/poster/job/:id' => 'spread#poster_update_job'
+  post 'spread/poster/job/:id' => 'spread#poster_update_job'
+
   match 'spread/resume/:id' , to: 'spread#my_resume' , via: [:get, :post]
   post 'spread/job/share', to: 'spread#share'
   post 'spread/job/remote/share', to: 'spread#remote_share'
   #match 'photos', to: 'photos#show', via: [:get, :post]
   post 'spread/remote/resume/:id' => 'spread#remote_update_resume'
-  get 'tree/test', to: 'spread#tree'
+  get 'tree/test/:id', to: 'spread#tree'
   post 'spread/remote/check/resume' => 'spread#remote_check_resume'
   post 'spread/remote/apply' => 'spread#remote_apply'
 end

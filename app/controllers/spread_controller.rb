@@ -6,6 +6,33 @@ class SpreadController < ApplicationController
       @resume = Resume.new
     end
 
+    def poster_show_job
+      @job = Job.find_by(id: params[:id].to_i)
+
+      if @job.blank?
+        @job = Job.new
+      end
+    end
+
+    def poster_update_job
+      #binding.pry
+      job = Job.find_by(id: params[:id].to_i)
+      if job.blank?
+        Job.create(params.permit![:job])
+      else
+        Job.update(params[:id],params.permit![:job])
+      end
+
+      # if WechatResume.find_by(openid: params["openid"]).blank?
+      #   resume = WechatResume.new(params.permit![:wechat_resume])
+      #   resume.save
+      #   result = resume
+      # else
+      #   result = WechatResume.update(params["openid"],params.permit![:wechat_resume])
+      # end
+      render :nothing => true
+    end
+
     def my_resume
 
     end
@@ -48,7 +75,8 @@ class SpreadController < ApplicationController
     end
 
 
-    def generate_list_node(node_id)
+    def generate_list_node(application_id)
+      node_id = Application.find_by(id:application_id).node_id
       tree_nodes = []
       while node_id != '0'
         tree_node = {}
@@ -70,7 +98,9 @@ class SpreadController < ApplicationController
     end
 
     def tree
-      @tree = generate_list_node(4).to_json
+      application_id = params[:id]
+      @tree = generate_list_node(application_id)
+      @hired = Resume.find_by(id:Application.find_by(id:application_id).resume_id)
     end
 
     def remote_check_resume
