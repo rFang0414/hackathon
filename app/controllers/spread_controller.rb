@@ -120,6 +120,56 @@ class SpreadController < ApplicationController
     end
 
     def remote_test_apply
+#       mailer = AmazonSes::Mailer.new(:access_key => "AKIAJXS5X7GZDEBIGPNA", 
+#         :secret_key => "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")
+
+#       mailer.deliver to: params[:email],
+#                      from:'875369936@qq.com',
+#                      subject:'Your application has been received.',
+#                      body:'You have applied this job successfully.
+
+# Thanks!
+# Careerbuilder'
+      key = ENV['AWS_ACCESS_KEY_ID']
+      secret = ENV['AWS_SECRET_ACCESS_KEY']
+
+      Aws.config.update({region: 'us-west-2', credentials: Aws::Credentials.new(key,secret)})
+      ses = Aws::SES::Client.new(region: Aws.config[:region],credentials: Aws.config[:credentials])
+
+      resp = ses.send_email(
+        # required
+        source: "liansh-19@hotmail.com",
+        # required
+        destination: {
+          to_addresses: [params[:email]],
+          cc_addresses: [],
+          bcc_addresses: [],
+        },
+        # required
+        message: {
+          # required
+          subject: {
+            # required
+            data: "Your application has been received",
+            charset: "UTF-8",
+            },
+          # required
+          body: {
+            text: {
+              # required
+              data: "",
+              charset: "UTF-8",
+            },
+            html: {
+              # required
+              data: "You have applied this job successfully.<br/>Thanks!<br/>Careerbuilder",
+              charset: "UTF-8",
+            },
+          },
+        },
+        reply_to_addresses: ["liansh-19@hotmail.com",],
+        return_path: "liansh-19@hotmail.com",
+      )
 
       render :text => params[:email]
     end
