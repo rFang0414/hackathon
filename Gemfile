@@ -69,5 +69,5 @@ gem "spreadsheet"
 
 gem 'roo', '~> 1.13.2'
 
-gem "rake", "0.8.7"
+gem "rake", "0.9.2.2"
 
