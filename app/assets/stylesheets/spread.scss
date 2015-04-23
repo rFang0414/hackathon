@@ -207,6 +207,58 @@
     margin-left: 47%;
 }
 
+.template_header, .file_upload_header
+{
+  background-color:rgb(238, 238, 238);
+  padding-top:10px;
+  padding-bottom:30px;
+  border-radius: 5px;
+  margin-bottom:20px;
+
+  h3
+  {
+    padding-left: 10px;
+  }
+}
+
+.container
+{
+  padding-top: 50px;
+}
+
+#txt1, #div1
+{
+  height: 400px;
+  position:relative;
+  border:2px solid rgb(238, 238, 238);
+  overflow:auto;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.template_select
+{
+  float:right;
+}
+
+.template_buttons
+{
+  margin-top:10px;
+}
+
+.file_upload
+{
+  margin-top: 280px;
+  margin-bottom: 570px;
+}
+
+.btn_save_template
+{
+  margin-top: 30px;
+}
+
+
+
 
 
 

@@ -60,3 +60,14 @@ gem 'amazon-ses-mailer', '~> 0.0.4'
 
 gem 'aws-sdk', '~> 2'
 
+gem "redis"
+
+gem "resque"
+gem 'resque-web', require: 'resque_web'
+
+gem "spreadsheet"
+
+gem 'roo', '~> 1.13.2'
+
+gem "rake", "0.8.7"
+

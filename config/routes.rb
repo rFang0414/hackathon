@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   patch 'spread/poster/job/:id' => 'spread#poster_update_job'
   post 'spread/poster/job/:id' => 'spread#poster_update_job'
   post 'spread/remote/test/apply' => 'spread#remote_test_apply'
+  post 'spread/remote/test/subscribe' => 'spread#remote_test_subscribe'
 
   match 'spread/resume/:id' , to: 'spread#my_resume' , via: [:get, :post]
   post 'spread/job/share', to: 'spread#share'
@@ -69,4 +70,12 @@ Rails.application.routes.draw do
   get 'tree/test/:id', to: 'spread#tree'
   post 'spread/remote/check/resume' => 'spread#remote_check_resume'
   post 'spread/remote/apply' => 'spread#remote_apply'
+
+  mount Resque::Server.new, :at => "/admin/resque"
+
+  get 'spread/edm/:id' => 'spread#get_edm'
+  post 'spread/edm/:id' => 'spread#post_edm'
+
+  post 'spread/template' => 'spread#update_template'
+  #post 'spread/edm/template/:id', to: 'spread#update_template'
 end

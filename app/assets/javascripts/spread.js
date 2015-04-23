@@ -15,6 +15,28 @@ jQuery(function(){
         });
     });
 
+    jQuery(".btn_email_subscribe").click(function(){
+        var email = jQuery(".apply_email").val();
+        $.ajax({
+            url: '../remote/test/subscribe',
+            method: 'POST',
+            data: {
+                "email": email
+            },
+            success:function(data){
+                //alert(data);
+                jQuery(".apply_input").hide();
+                jQuery(".apply_success").show();
+            }
+        });
+    });
+
+
+    // jQuery(".template_select").val(jQuery("#email_template_id").val());
+    // jQuery(".template_select").change(function(){
+    //     var url = window.location.origin + "/spread/edm/" + jQuery(this).val();
+    //     window.open(url,'_self')
+    // });
 
     jQuery("#d_clip_button").click(function(){
       jQuery(this).text("Share link has been copied.");
@@ -36,6 +58,100 @@ jQuery(function(){
         jQuery(".apply-success").show();
     });
 });
+
+function SetUpEDM(){
+    jQuery("#div1").html(jQuery("#txt1").val());
+    jQuery("#txt1").keyup(function() {
+        jQuery("#div1").html(jQuery("#txt1").val());
+        if (GetLength(jQuery("#txt1").val()) > 64000){
+            alert("Please make sure your HTML is slim.");
+        }
+    });
+
+    if (jQuery(".template_header_input").val() == "")
+    {
+        ShowTemplateHTML();
+        jQuery(".template_header_input").show();
+        jQuery(".template_header_title").hide();
+        jQuery(".btn_save_template").val("Create Template");
+    }else
+    {
+        ShowTemplatePreview();
+        jQuery(".template_header_input").hide();
+        jQuery(".template_header_title").show();
+        jQuery(".btn_save_template").val("Update Template");
+    }
+    
+
+    jQuery(".btn_template_preview").click(function(){
+        ShowTemplatePreview();
+    });
+
+    jQuery(".btn_template_html").click(function(){
+        ShowTemplateHTML();
+    });
+
+    jQuery(".btn_template_split").click(function(){
+        ShowTemplateSplit();
+    });
+
+    jQuery(".template_header").click(function(){
+        jQuery(".template_header_input").show();
+        jQuery(".template_header_title").hide();
+        event.stopPropagation();
+    });
+
+    jQuery("body").click(function(){
+        if (jQuery(".template_header_input").val() != "")
+        {
+            jQuery(".template_header_input").hide();
+            jQuery(".template_header_title").show();
+            jQuery(".template_header_title h3").text(jQuery(".template_header_input").val());
+        }
+    });
+
+    jQuery(".template form").on("ajax:success", function(e, data, status, xhr){
+        if (data.email_name != ""){
+            ShowTemplatePreview();
+            var url = window.location.origin + "/spread/edm/" + data.id;
+            window.open(url,'_self')
+        }
+    });
+}
+
+function GetLength(str) {
+    ///<summary>获得字符串实际长度，中文2，英文1</summary>
+    ///<param name="str">要获得长度的字符串</param>
+    var realLength = 0, len = str.length, charCode = -1;
+    for (var i = 0; i < len; i++) {
+        charCode = str.charCodeAt(i);
+        if (charCode >= 0 && charCode <= 128) realLength += 1;
+        else realLength += 2;
+    }
+    return realLength;
+}
+
+function ShowTemplatePreview(){
+    jQuery(".text_template_html").hide();
+    jQuery(".text_template_preview").show();
+    jQuery("#div1").html(jQuery("#txt1").val());
+    jQuery(".html_mode button").css("background-color","#5bc0de");
+    jQuery(".btn_template_preview").css("background-color","#31b0d5");
+}
+
+function ShowTemplateHTML(){
+    jQuery(".text_template_html").show();
+    jQuery(".text_template_preview").hide();
+    jQuery(".html_mode button").css("background-color","#5bc0de");
+    jQuery(".btn_template_html").css("background-color","#31b0d5");
+}
+
+function ShowTemplateSplit(){
+    jQuery(".text_template_html").show();
+    jQuery(".text_template_preview").show();
+    jQuery(".html_mode button").css("background-color","#5bc0de");
+    jQuery(".btn_template_split").css("background-color","#31b0d5");
+}
 
 function RemoteCheckResume(){
     var phone = jQuery("#node_phone").val();

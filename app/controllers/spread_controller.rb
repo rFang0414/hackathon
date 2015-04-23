@@ -120,21 +120,13 @@ class SpreadController < ApplicationController
     end
 
     def remote_test_apply
-#       mailer = AmazonSes::Mailer.new(:access_key => "AKIAJXS5X7GZDEBIGPNA", 
-#         :secret_key => "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")
-
-#       mailer.deliver to: params[:email],
-#                      from:'875369936@qq.com',
-#                      subject:'Your application has been received.',
-#                      body:'You have applied this job successfully.
-
-# Thanks!
-# Careerbuilder'
-      key = ENV['AWS_ACCESS_KEY_ID']
-      secret = ENV['AWS_SECRET_ACCESS_KEY']
+      key = ""
+      secret = ""
 
       Aws.config.update({region: 'us-west-2', credentials: Aws::Credentials.new(key,secret)})
       ses = Aws::SES::Client.new(region: Aws.config[:region],credentials: Aws.config[:credentials])
+
+      from_erb_path = File.join(Rails.root, 'app', 'templates', 'welcome.html.erb')
 
       resp = ses.send_email(
         # required
@@ -162,7 +154,7 @@ class SpreadController < ApplicationController
             },
             html: {
               # required
-              data: "You have applied this job successfully.<br/>Thanks!<br/>Careerbuilder",
+              data: File.read(from_erb_path),
               charset: "UTF-8",
             },
           },
@@ -171,7 +163,53 @@ class SpreadController < ApplicationController
         return_path: "liansh-19@hotmail.com",
       )
 
-      render :text => params[:email]
+      render :text => File.read(from_erb_path)
+    end
+
+    def remote_test_subscribe
+      render :text => "hello"
+    end
+
+    def get_edm
+      @email_template = EmailTemplate.find_by(id: params[:id].to_i)
+
+      if params[:id].to_i == 0 || @email_template.blank?
+        @email_template = EmailTemplate.new
+      end
+    end
+
+    def post_edm
+      file = Roo::Excel.new(params["upfile"].path)
+      file.row(1)[0]
+
+      keyword_row = file.row(1)
+      email_value_row_list = Array.new
+
+      i = 2
+      while not file.row(i)[0].blank? do
+        email_value_row_list.push(file.row(i))
+        i +=1
+      end
+
+      email_info = Array.new
+      email_info.push(keyword_row)
+      email_info.push(email_value_row_list)
+
+      template_id = params[:id]
+
+      #pry.binding
+      Resque.enqueue(SleepingJob,email_info,template_id)
+      render :text => "Success!"
+    end
+
+    def update_template
+      #pry.binding
+      if params[:email_template_id].to_i == 0 || EmailTemplate.find_by(id: params[:email_template_id].to_i).blank?
+        @email_template = EmailTemplate.create(params.permit![:email_template])
+      else
+        @email_template = EmailTemplate.update(params[:email_template_id],params.permit![:email_template])
+      end
+      render :json => @email_template
     end
 
 end
