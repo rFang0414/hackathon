@@ -120,20 +120,20 @@ class SpreadController < ApplicationController
     end
 
     def remote_test_apply
-      key = ""
-      secret = ""
+      key = ENV['AWS_ACCESS_KEY_ID']
+      secret = ENV['AWS_SECRET_ACCESS_KEY']
 
       Aws.config.update({region: 'us-west-2', credentials: Aws::Credentials.new(key,secret)})
       ses = Aws::SES::Client.new(region: Aws.config[:region],credentials: Aws.config[:credentials])
 
-      from_erb_path = File.join(Rails.root, 'app', 'templates', 'welcome.html.erb')
+      #from_erb_path = File.join(Rails.root, 'app', 'templates', 'welcome.html.erb')
 
       resp = ses.send_email(
         # required
         source: "liansh-19@hotmail.com",
         # required
         destination: {
-          to_addresses: [params[:email]],
+          to_addresses: ["lian.winfa@gmail.com"],
           cc_addresses: [],
           bcc_addresses: [],
         },
@@ -154,7 +154,7 @@ class SpreadController < ApplicationController
             },
             html: {
               # required
-              data: File.read(from_erb_path),
+              data: "Hello, this is an email",
               charset: "UTF-8",
             },
           },

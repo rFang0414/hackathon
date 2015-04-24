@@ -141,7 +141,7 @@ GEM
       activesupport (= 4.2.0)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (0.8.7)
+    rake (0.9.2.2)
     rdoc (4.2.0)
       json (~> 1.4)
     redis (3.2.1)
@@ -232,7 +232,7 @@ DEPENDENCIES
   pry-byebug (~> 3.0.1)
   pry-stack_explorer (~> 0.4.9.2)
   rails (= 4.2.0)
-  rake (= 0.8.7)
+  rake (= 0.9.2.2)
   redis
   resque
   resque-web

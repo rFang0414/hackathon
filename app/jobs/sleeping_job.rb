@@ -6,8 +6,8 @@ class SleepingJob
       keyword_row = email_info[0]
       email_value_row_list = email_info[1]
 
-      key = "AKIAIHFJKNSLLHVO7IHA"
-      secret = "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"
+      key = ENV['AWS_ACCESS_KEY_ID']
+      secret = ENV['AWS_SECRET_ACCESS_KEY']
 
       Aws.config.update({region: 'us-west-2', credentials: Aws::Credentials.new(key,secret)})
       ses = Aws::SES::Client.new(region: Aws.config[:region],credentials: Aws.config[:credentials])
