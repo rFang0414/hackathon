@@ -78,4 +78,7 @@ Rails.application.routes.draw do
 
   post 'spread/template' => 'spread#update_template'
   #post 'spread/edm/template/:id', to: 'spread#update_template'
+
+  get 'task' => 'task#get_index'
+  get 'chat' => 'chat#chat'
 end

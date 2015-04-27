@@ -71,3 +71,16 @@ gem 'roo', '~> 1.13.2'
 
 gem "rake", "0.9.2.2"
 
+gem 'websocket-rails', "0.7.0"
+
+gem 'eventmachine'
+
+gem "em-synchrony"
+
+gem 'sucker_punch'
+
+
+
+
+
+

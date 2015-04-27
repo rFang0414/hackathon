@@ -4,6 +4,8 @@ class SpreadController < ApplicationController
       @node_id = params[:node_id].blank? ? encode("0") : params[:node_id]
 
       @resume = Resume.new
+
+      #WebsocketRails[:testchannel].trigger(:testevent, "hello111")
     end
 
     def poster_show_job
@@ -198,7 +200,8 @@ class SpreadController < ApplicationController
       template_id = params[:id]
 
       #pry.binding
-      Resque.enqueue(SleepingJob,email_info,template_id)
+      #Resque.enqueue(SleepingJob,email_info,template_id)
+      SendEmailJob.new.async.perform(email_info,template_id)
       render :text => "Success!"
     end
 

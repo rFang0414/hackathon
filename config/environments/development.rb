@@ -37,4 +37,6 @@ Rails.application.configure do
   config.assets.raise_runtime_errors = true
 
   # Raises error for missing translations
+
+  config.middleware.delete Rack::Lock
 end

@@ -19,3 +19,5 @@
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.js
 //= require zeroclipboard
+//= require websocket_rails/main
+

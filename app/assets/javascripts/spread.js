@@ -32,6 +32,23 @@ jQuery(function(){
     });
 
 
+    //********************
+    task = {
+      name: 'Start taking advantage of WebSockets',
+      completed: false
+    }
+
+    dispatcher = new WebSocketRails('localhost:3000/websocket');
+
+    dispatcher.trigger('tasks.create', "hehehh");
+
+    dispatcher.bind('tasks.create_success', function(task) {
+      //console.log('successfully created ' + task.name);
+      alert(task);
+    });
+    //********************
+
+
     // jQuery(".template_select").val(jQuery("#email_template_id").val());
     // jQuery(".template_select").change(function(){
     //     var url = window.location.origin + "/spread/edm/" + jQuery(this).val();
