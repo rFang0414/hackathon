@@ -21,9 +21,6 @@
 //= require zeroclipboard
 //= require websocket_rails/main
 
-//= require jquery.fileupload
-//= require jquery.fileupload-ui
-
 
 
 
