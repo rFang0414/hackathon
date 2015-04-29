@@ -67,7 +67,7 @@ gem 'resque-web', require: 'resque_web'
 
 gem "spreadsheet"
 
-gem 'roo', '~> 1.13.2'
+gem 'roo'
 
 gem "rake", "0.9.2.2"
 
@@ -75,9 +75,19 @@ gem 'websocket-rails', "0.7.0"
 
 gem 'eventmachine'
 
-gem "em-synchrony"
+gem 'sidekiq', '~> 3.3.4'
 
 gem 'sucker_punch'
+
+gem 'jquery.fileupload-rails'
+
+gem "activerecord-import"
+
+gem 'puma'
+
+gem 'rb-fsevent'
+
+
 
 
 

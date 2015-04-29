@@ -248,7 +248,7 @@
 
 .file_upload
 {
-  margin-top: 280px;
+  margin-top: 60px;
   margin-bottom: 570px;
 }
 
@@ -257,6 +257,85 @@
   margin-top: 30px;
 }
 
+
+
+
+
+.bar {
+    height: 18px;
+    background: green;
+}
+
+.file_upload_box{
+  border-color: #F4E54E;
+  border-width: thin;
+  border-style: solid;
+  height: auto;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: rgba(240, 173, 78, 0.07);
+}
+
+.progress{
+    margin-top: 5px;
+    height: 17px;
+}
+
+.btn_send_email{
+   /* width: 31.5%;
+
+  right: 0px;
+  position: relative;
+
+  bottom: px;
+  top: -40px;
+  left: 68.5%;*/
+  
+  margin-left: 15px;
+  width: 110px;
+  margin-bottom: 15px;
+
+}
+
+#file_upload{
+    display: block;
+  height: 80px;
+  padding-top: 30px;
+  font-size: larger;
+  color: rgb(82, 7, 157);
+  padding-left: 60px;
+}
+
+.file_info{
+    padding-left: 5%;
+  padding-top: 10px;
+  font-size: larger;
+}
+
+.auto_inline{
+  width:auto !important;
+}
+
+.btn_box{
+    height: 30px;
+  width: 100px;
+}
+
+.send_email_message{
+    /*border-color: red;
+  border-style: solid;
+  border-width: thin;*/
+}
+
+.btn_save_template
+{
+  display:none;
+}
+
+.send_email_line{
+  padding-left: 41px !important;
+}
 
 
 

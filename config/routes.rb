@@ -81,4 +81,11 @@ Rails.application.routes.draw do
 
   get 'task' => 'task#get_index'
   get 'chat' => 'chat#chat'
+
+  post 'spread/file' => 'spread#post_email_info'
+  post 'spread/send' => 'spread#send_email'
+
+  get 'spread/send/status' => 'spread#get_send_status'
+
+  get 'event/status' => 'event_source#tester'
 end

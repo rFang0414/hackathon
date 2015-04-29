@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421095540) do
+ActiveRecord::Schema.define(version: 20150428084140) do
 
   create_table "applications", force: :cascade do |t|
     t.string   "job_id",     limit: 255
@@ -19,6 +19,18 @@ ActiveRecord::Schema.define(version: 20150421095540) do
     t.string   "resume_id",  limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "email_infos", force: :cascade do |t|
+    t.string   "email",      limit: 255
+    t.string   "field_1",    limit: 255
+    t.string   "field_2",    limit: 255
+    t.string   "field_3",    limit: 255
+    t.string   "field_4",    limit: 255
+    t.string   "field_5",    limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "status",     limit: 255
   end
 
   create_table "email_templates", force: :cascade do |t|

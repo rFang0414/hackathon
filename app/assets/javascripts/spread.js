@@ -33,27 +33,67 @@ jQuery(function(){
 
 
     //********************
-    task = {
-      name: 'Start taking advantage of WebSockets',
-      completed: false
-    }
+    // task = {
+    //   name: 'Start taking advantage of WebSockets',
+    //   completed: false
+    // }
 
-    dispatcher = new WebSocketRails('localhost:3000/websocket');
+    // dispatcher = new WebSocketRails('localhost:3000/websocket');
 
-    dispatcher.trigger('tasks.create', "hehehh");
+    // dispatcher.trigger('tasks.create', "hehehh");
 
-    dispatcher.bind('tasks.create_success', function(task) {
-      //console.log('successfully created ' + task.name);
-      alert(task);
-    });
+    // dispatcher.bind('tasks.create_success', function(task) {
+    //   //console.log('successfully created ' + task.name);
+    //   alert(task);
+    // });
+    //***************
+
+    // if(typeof(EventSource) !== "undefined") {
+    //     var source = new EventSource("http://localhost:3001/spread/send/status");
+    //     source.onmessage = function(event) {
+    //         jQuery("#send_email_message").val(event.data);
+    //         //document.getElementById("result").innerHTML += event.data + "<br>";
+    //     };
+    // } else {
+    //     document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
+    //     jQuery("#send_email_message").val("error");
+    // }
+
+    // var source = new EventSource("http://localhost:3001/spread/send/status");
+    // source.onmessage = function(event) {
+    //     //alert(event.data);
+    //     jQuery("#send_email_message").val("hello");
+    //     //document.getElementById("result").innerHTML += event.data + "<br>";
+    // };
+
+    // source.onopen = function () {
+    //   //alert("dddd");
+    //   jQuery("#send_email_message").val("open");
+    // };
+
+    // source.addEventListener('update', function(e){
+    //     jQuery("#send_email_message").val("update");
+    // }, false);
+
+    //*****************
+    // connect to server like normal
+    // var dispatcher = new WebSocketRails('localhost:3001/websocket');
+
+    // // subscribe to the channel
+    // var channel = dispatcher.subscribe('channel_shanwa');
+
+    // // You can also pass an object to the subscription event
+    // // var channel = dispatcher.subscribe({channel: 'channel_name', foo: 'bar'});
+
+    // // bind to a channel event
+    // channel.bind('event_shanwa', function(data) {
+    //   var message = jQuery("#send_email_message").val();
+    //   var this_message = "\r\n"+ data;
+
+    //   jQuery("#send_email_message").val(this_message)
+    // });
     //********************
 
-
-    // jQuery(".template_select").val(jQuery("#email_template_id").val());
-    // jQuery(".template_select").change(function(){
-    //     var url = window.location.origin + "/spread/edm/" + jQuery(this).val();
-    //     window.open(url,'_self')
-    // });
 
     jQuery("#d_clip_button").click(function(){
       jQuery(this).text("Share link has been copied.");
@@ -98,6 +138,11 @@ function SetUpEDM(){
         jQuery(".template_header_title").show();
         jQuery(".btn_save_template").val("Update Template");
     }
+
+    jQuery(".btn_template_edit").click(function(){
+        jQuery(".btn_save_template").show();
+        ShowTemplateHTML();
+    });
     
 
     jQuery(".btn_template_preview").click(function(){
@@ -130,10 +175,109 @@ function SetUpEDM(){
     jQuery(".template form").on("ajax:success", function(e, data, status, xhr){
         if (data.email_name != ""){
             ShowTemplatePreview();
-            var url = window.location.origin + "/spread/edm/" + data.id;
+            var url = "../edm/" + data.id;
             window.open(url,'_self')
         }
     });
+
+    jQuery(".file_upload_submit").click(function(){
+            event.preventDefault();
+            uploadFiles('../file', document.querySelector('input[type="file"]').files);
+    }); 
+
+    jQuery(".file_upload_cancel , .file_upload_remove").click(function(){
+         event.preventDefault();
+         // jQuery("#file_upload").val("");
+         // jQuery(".file_upload_box").hide();
+         ShowFileNoFile();
+    });
+
+    jQuery("#file_upload").change(function(){
+        jQuery("#file_upload").val();
+        var file = document.getElementById("file_upload").files[0];
+        // jQuery(".file_name").text(file.name);
+        // jQuery(".file_size").text(file.size/1024 + "KB");
+        // jQuery(".file_info").show();
+        // jQuery(".file_upload_box").show();
+        // jQuery(".progress-bar").width("0%");
+        // jQuery(".send_email_message").text("");
+        // jQuery(".send_email_line").hide();
+        ShowFileOnLoaded(file);
+    });
+
+    if (!window.skip){
+        //RemoteEmailStatus();
+    }
+
+    jQuery(".btn_send_email").click(function(){
+        event.preventDefault();
+        jQuery(".send_email_message").text("Sending emails...");
+        $.ajax({
+                    url: '../send',
+                    method: 'POST',
+                    data: {
+                        "template_id": jQuery("#email_template_id").val()
+                    }
+        });
+        window.skip = false;
+        RemoteEmailStatus();
+    })
+}
+
+function RemoteEmailStatus(){
+        setTimeout(function(){
+            $.ajax({
+                    url: '../send/status',
+                    method: 'GET',
+                    success: function(data){
+                        var message = data.count + " emails has been sent!"
+                        jQuery(".send_email_message").text(message);
+                        if (data.email == "finished"){
+                            window.skip = true;
+                            jQuery(".send_email_message").text("Finished email sending!");
+                        }
+                    }
+            });
+            if (!window.skip){
+                RemoteEmailStatus();
+            }
+        }, 2000);
+}
+
+function uploadFiles(url, files) {
+          var formData = new FormData();
+
+          for (var i = 0, file; file = files[i]; ++i) {
+            formData.append("upfile", file);
+          }
+
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', url, true);
+          xhr.onload = function(e) {
+            //console.log((ev.loaded/ev.total)+'%');
+          };
+          // xhr.upload.addEventListener('progress',function(ev){
+          //       console.log((ev.loaded/ev.total)+'%');
+          //   }, false);
+
+          //var progressBar = document.querySelector('progress');
+          xhr.upload.onprogress = function(e) {
+            if (e.lengthComputable) {
+             // progressBar.value = (e.loaded / e.total) * 100;
+              //progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
+              jQuery(".progress").show();
+              var percent = (e.loaded / e.total) * 100 + "%";
+              jQuery(".progress-bar").width(percent);
+
+              if (percent == "100%"){
+                //jQuery(".progress").hide();
+                //jQuery(".send_email_line").show();
+                ShowFileUploaded();
+              }
+            }
+          };
+
+          xhr.send(formData);  
 }
 
 function GetLength(str) {
@@ -168,6 +312,33 @@ function ShowTemplateSplit(){
     jQuery(".text_template_preview").show();
     jQuery(".html_mode button").css("background-color","#5bc0de");
     jQuery(".btn_template_split").css("background-color","#31b0d5");
+}
+
+function ShowFileOnLoaded(file){
+    jQuery(".file_name").text(file.name);
+    jQuery(".file_size").text(file.size/1024 + "KB");
+    jQuery(".file_info").show();
+    jQuery(".file_upload_box").show();
+    jQuery(".progress-bar").width("0%");
+    jQuery(".send_email_message").text("");
+    jQuery(".send_email_line").hide();
+    jQuery(".file_upload_remove_div").hide();
+    jQuery(".file_upload_cancel_div").show();
+    jQuery(".file_upload_submit_div").show();
+}
+
+function ShowFileUploaded(){
+    jQuery(".send_email_line").show();
+    jQuery(".file_upload_remove_div").show();
+    jQuery(".file_upload_cancel_div").hide();
+    jQuery(".file_upload_submit_div").hide();
+}
+
+function ShowFileNoFile(){
+    jQuery("#file_upload").val("");
+    jQuery(".file_upload_box").hide();
+    jQuery(".progress-bar").width("0%");
+    jQuery(".send_email_line").hide();
 }
 
 function RemoteCheckResume(){

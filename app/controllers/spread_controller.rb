@@ -1,4 +1,6 @@
 class SpreadController < ApplicationController
+    #include ActionController::Live
+
     def get_job
       @job = Job.find_by(id: params[:id].to_i)
       @node_id = params[:node_id].blank? ? encode("0") : params[:node_id]
@@ -178,30 +180,47 @@ class SpreadController < ApplicationController
       if params[:id].to_i == 0 || @email_template.blank?
         @email_template = EmailTemplate.new
       end
+      #pry.binding
+
+      @email_info = EmailInfo.new
     end
 
-    def post_edm
+    def post_email_info
+      #binding.pry
+
+      EmailInfo.delete_all
+
+
       file = Roo::Excel.new(params["upfile"].path)
-      file.row(1)[0]
+      columns = get_file_colums(file.row(1).count)
+      values = []
 
-      keyword_row = file.row(1)
-      email_value_row_list = Array.new
-
+      values.push(file.row(1))
       i = 2
       while not file.row(i)[0].blank? do
-        email_value_row_list.push(file.row(i))
+        values.push(file.row(i))
         i +=1
       end
 
-      email_info = Array.new
-      email_info.push(keyword_row)
-      email_info.push(email_value_row_list)
+      EmailInfo.import columns, values
+      render :json => {"emails"=>EmailInfo.first(5), "count"=>EmailInfo.count}
+    end
 
-      template_id = params[:id]
+    def post_edm
+      template_id = 2
 
       #pry.binding
       #Resque.enqueue(SleepingJob,email_info,template_id)
-      SendEmailJob.new.async.perform(email_info,template_id)
+      SendEmailJob.new.async.perform(template_id)
+      render :text => "Success!"
+    end
+
+    def send_email
+      #binding.pry
+      template_id = params["template_id"]
+      SendEmailJob.new.async.perform(template_id)
+      #SendEmailJob.perform_later(template_id)
+      # SendEmailJob.perform(2)
       render :text => "Success!"
     end
 
@@ -213,6 +232,39 @@ class SpreadController < ApplicationController
         @email_template = EmailTemplate.update(params[:email_template_id],params.permit![:email_template])
       end
       render :json => @email_template
+    end
+
+    def get_send_status
+      email_info = EmailInfo.where("status = 'sent'").order("updated_at DESC").first
+      
+      all_count = EmailInfo.all.count
+      send_count = EmailInfo.where("status = 'sent'").count
+
+      if (send_count +1  < all_count)
+        render :json => {"email"=>email_info.email, "count" => send_count}
+      else
+        render :json => {"email"=>"finished", "count" => send_count}
+      end
+
+    end
+
+    
+    private
+    def get_file_colums colums_number
+        #binding.pry
+        if colums_number == 1
+          return [:email]
+        elsif colums_number == 2
+          return [:email, :field_1]
+        elsif colums_number == 3
+          return [:email, :field_1, :field_2]
+        elsif colums_number == 4
+          return [:email, :field_1, :field_2, :field_3]
+        elsif colums_number == 5
+          return [:email, :field_1, :field_2, :field_3, :field_4]
+        elsif colums_number == 6
+          return [:email, :field_1, :field_2, :field_3, :field_4, :field_5]
+        end
     end
 
 end
