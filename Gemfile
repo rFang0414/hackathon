@@ -69,7 +69,7 @@ gem "spreadsheet"
 
 gem 'roo'
 
-gem "rake", "0.9.2.2"
+gem "rake", "10.0.0"
 
 gem 'websocket-rails', "0.7.0"
 
@@ -86,6 +86,16 @@ gem "activerecord-import"
 gem 'puma'
 
 gem 'rb-fsevent'
+
+gem 'spear-cb-api', '~> 0.0.15'
+
+
+group :development do
+  gem 'capistrano', '~> 3.2.1'
+  gem 'capistrano-bundler', '~> 1.1.0'
+  gem 'capistrano-rvm'
+end
+
 
 
 

@@ -1,0 +1,17 @@
+
+<%@apis.each do |a|%>
+    
+    <div><%=a.api_name%></dv>
+    <%api_times = ApiPerformance.where(:api_name=>a.api_name).select(:api_time)%>
+        
+        <%count = 0%>
+        <%time_all = 0%>
+        <%api_times.each do |api_time|%>
+            <div><%=api_time.api_time%></div>
+          <%time_all = time_all + api_time.api_time.to_f%>
+          <%count = count +1%>
+        <%end%>
+
+        <%=a.api_name + " average time:" + (time_all/count).to_s%>
+
+<%end%>

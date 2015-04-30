@@ -248,6 +248,144 @@ class SpreadController < ApplicationController
 
     end
 
+    def get_api_status
+
+      #create_user
+      email = "TestUser_" + "123" + "@sina.com.cn"
+      user_data = 
+      {
+        "FirstName" => 'Test',
+        "LastName" => 'User',
+        "Email" => email,
+        "Password" => 'Qwer1234!',
+        "Phone" => '+657777888999',
+        "City" => 'Singapore',
+        "State" => 'SG',
+        "CountryCode" => 'SG',
+        "AllowNewsletterEmails" => false,
+        "HostSite" => 'JC',
+        "AllowPartnerEmails" => false,
+        "AllowEventEmails" => false,
+        "SendEmail" => false,
+        "Gender" => 'U',
+        "UserType" => 'jobseeker',
+        "Status" => 'active'
+      }
+
+      t1 = Time.now
+      result = Spear.create_user(user_data)
+      t2 = Time.now
+      ApiPerformance.create(api_name: "createUser",api_time: (t2-t1).to_s)
+      result_hash = {"createUser" => result}
+
+      external_user_id = result.response["ResponseUserCreate"]["ResponseExternalID"]
+      external_user_id = "XRHS6896PJXVVMVKVXFX"
+
+      #XRHS6896PJXVVMVKVXFX
+
+      #retrieve_user
+      t1 = Time.now
+      result = Spear.retrieve_user(external_user_id, "Qwer1234!")
+      t2 = Time.now
+      ApiPerformance.create(api_name: "retrieveUser",api_time: (t2-t1).to_s)
+      result_hash["createUser"] = result
+
+      #create_resume
+      resume_data = 
+      {
+        "ExternalUserID" => "XRHS6896PJXVVMVKVXFX",
+        "ShowContactInfo" => true,
+        "Title" => 'asasdasdasd',
+        "ResumeText" => 'albee009@gmail.com JobsCentral999',
+        "Visibility" => true,
+        "CanRelocateNationally" => false,
+        "CanRelocateInternationally" => false,
+        "TotalYearsExperience" => 1,
+        "HostSite" => 'T3',
+        "DesiredJobTypes" => 'ETFE',
+        "CompanyExperiences" => [],
+        "Educations" => [],
+        "Languages" => [],
+        "CustomValues" => []
+      }
+      t1 = Time.now
+      result = Spear.create_resume(resume_data)
+      t2 = Time.now
+      ApiPerformance.create(api_name: "createResume",api_time: (t2-t1).to_s)
+      result_hash["createResume"] = result
+      
+
+      #retrieve_resume 
+      t1 = Time.now
+      result = Spear.retrieve_resume("XRHQ7VK5W7KHQBG009Y6","XRHS6896PJXVVMVKVXFX")
+      t2 = Time.now
+      ApiPerformance.create(api_name: "retrieveResume",api_time: (t2-t1).to_s)
+      result_hash["retrieveResume"] = result
+
+      #search_job
+      #JHT0RP6CG2D178X1DFF
+      t1 = Time.now
+      result = Spear.search_job({:TalentNetworkDID => "TN812H85WFC5ZM7TC2RB", :SiteEntity => 'TalentNetworkJob', :CountryCode => 'CN'})
+      t2 = Time.now
+      ApiPerformance.create(api_name: "searchJob",api_time: (t2-t1).to_s)
+      job_did = result.jobs[0].did
+      result_hash["searchJob"] = result
+
+      #retrieve_job
+      t1 = Time.now
+      result = Spear.retrieve_job("JHT0RP6CG2D178X1DFF")
+      t2 = Time.now
+      ApiPerformance.create(api_name: "retrieveJob",api_time: (t2-t1).to_s)
+      result_hash["retrieveJob"] = result
+
+      #application_blank
+      t1 = Time.now
+      app_blank = Spear.application_blank("jhn2dt6d513vxy7s18y")
+      t2 = Time.now
+      ApiPerformance.create(api_name: "applicationBlank",api_time: (t2-t1).to_s)
+      result_hash["applicationBlank"] = app_blank
+
+
+      if app_blank.success?
+        questions = []
+        app_blank.questions.each do |q|
+          if 'ApplicantName'.eql?(q.id)
+            questions << {QuestionID: q.id, ResponseText: "TestName"}
+          elsif 'ApplicantEmail'.eql?(q.id)
+            questions << {QuestionID: q.id, ResponseText: "lian_test@yahoo.com"}
+          elsif 'Resume'.eql?(q.id)
+            questions << {QuestionID: q.id, ResponseText: "My Resume"}
+          end
+        end
+      end
+
+      #application_submit
+      t1 = Time.now
+      app_submit = Spear.application_submit("jhn2dt6d513vxy7s18y", questions,true)
+      t2 = Time.now
+      ApiPerformance.create(api_name: "applicationSubmit",api_time: (t2-t1).to_s)
+      result_hash["applicationSubmit"] = app_submit
+
+
+      render :json => result_hash
+
+    end
+
+    def get_api_result
+      @apis = ApiPerformance.select(:api_name).uniq
+      # apis.each do |a| 
+      #   api_times = ApiPerformance.where(:api_name=>a.api_name).select(:api_time)
+
+      #   count = 0
+      #   time_all = 0
+      #   api_times.each do |api_time|
+      #     time_all = time_all + api_time.api_time.to_f
+      #     count = count +1
+      #   end
+      #   puts a.api_name + (time_all/count).to_s
+      # end
+      render :noting => true
+    end
     
     private
     def get_file_colums colums_number

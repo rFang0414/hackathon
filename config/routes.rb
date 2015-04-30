@@ -88,4 +88,8 @@ Rails.application.routes.draw do
   get 'spread/send/status' => 'spread#get_send_status'
 
   get 'event/status' => 'event_source#tester'
+
+  get 'api/status' => 'spread#get_api_status'
+
+  get 'api/status/result' => 'spread#get_api_result'
 end
