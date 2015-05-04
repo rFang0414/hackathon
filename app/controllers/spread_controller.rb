@@ -248,6 +248,18 @@ class SpreadController < ApplicationController
 
     end
 
+    def get_api_status_test
+
+    end
+
+    def post_api_status_test
+      t1 = Time.now
+      result = Spear.parse_file(params["resume"])
+      t2 = Time.now
+      ApiPerformance.create(api_name: "parseResume",api_time: (t2-t1).to_s)
+      render :json => result
+    end
+
     def get_api_status
 
       #create_user
@@ -386,6 +398,8 @@ class SpreadController < ApplicationController
       # end
       render :noting => true
     end
+
+
     
     private
     def get_file_colums colums_number

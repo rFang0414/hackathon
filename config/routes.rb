@@ -92,4 +92,7 @@ Rails.application.routes.draw do
   get 'api/status' => 'spread#get_api_status'
 
   get 'api/status/result' => 'spread#get_api_result'
+
+  get 'api/status/test' => 'spread#get_api_status_test'
+  post 'api/status/test' => 'spread#post_api_status_test'
 end

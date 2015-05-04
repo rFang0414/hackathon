@@ -1,0 +1,6 @@
+
+
+<%= form_tag({action: :post_api_status_test}, multipart: true) do %>
+  <%= file_field_tag 'resume' %>
+  <%= submit_tag("Submit") %>
+<% end %>
