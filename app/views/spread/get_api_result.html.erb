@@ -1,17 +1,89 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>API Calling Time</h1>
+  </div>
 
-<%@apis.each do |a|%>
-    
-    <div><%=a.api_name%></dv>
-    <%api_times = ApiPerformance.where(:api_name=>a.api_name).select(:api_time)%>
+  <script type="text/javascript">
+        function draw_chart(rows, chart_name){
+            google.load('visualization', '1', {packages: ['corechart', 'line']});
+            google.setOnLoadCallback(drawBasic);
+
+            function drawBasic() {
+
+                  var data = new google.visualization.DataTable();
+                  data.addColumn('number', 'X');
+                  data.addColumn('number', chart_name);
+                  data.addColumn('number', "average time");
+                  
+
+                  // data.addRows([
+                  //       [0,2.62],
+                  //       [1,1.63],
+                  //       [2,2.64],
+                  //       [3,2.35],
+                  //       [4,1.56],
+                  //       [5,2.17],
+                  //       [6,3.24]
+                  //   ])
+                  data.addRows(rows);
+
+                  var options = {
+                    hAxis: {
+                      title: 'Test Case'
+                    },
+                    vAxis: {
+                      title: 'Calling Time'
+                    }
+                  };
+
+
+                  var chart = new google.visualization.LineChart(document.getElementById('chart_div_' + chart_name));
+
+                  chart.draw(data, options);
+                }
+
+        }
+    </script>
+
+  <div>
+    <%@apis.each do |a|%>   
+        <div><h2><%=a.api_name%></h2></dv>
+        <%api_times = ApiPerformance.where(:api_name=>a.api_name).select(:api_time)%>
         
         <%count = 0%>
         <%time_all = 0%>
+        <%rows = []%>
         <%api_times.each do |api_time|%>
-            <div><%=api_time.api_time%></div>
-          <%time_all = time_all + api_time.api_time.to_f%>
-          <%count = count +1%>
+            <span><%=api_time.api_time%></span>
+            <% rows << [count, api_time.api_time.to_f] %>
+            <%time_all = time_all + api_time.api_time.to_f%>
+            <%count = count +1%>
         <%end%>
 
-        <%=a.api_name + " average time:" + (time_all/count).to_s%>
+        <%arerage_time = (time_all/count)%>
+        <%rows.each do |row|%>
+            <%row << arerage_time%>
+        <%end%>
 
-<%end%>
+        <div><%=a.api_name + " average time:" + (arerage_time).to_s%></div>
+
+        <div id=<%="chart_div_" + a.api_name%> >
+            <input type="hidden" id=<%="hidden_" + a.api_name%> value=<%=a.api_name%>>
+            <script type="text/javascript">
+            //alert("hello");
+                draw_chart(<%=rows%>, jQuery(<%="hidden_" + a.api_name%>,<%=arerage_time%>).val());
+                //console.log()
+            </script>
+
+        </div>
+    <%end%>
+
+
+  </div>
+</div>
+
+
+    
+
+
+
