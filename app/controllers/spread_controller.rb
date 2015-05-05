@@ -186,12 +186,15 @@ class SpreadController < ApplicationController
     end
 
     def post_email_info
-      #binding.pry
-
       EmailInfo.delete_all
 
+      file_path = params["upfile"].path
+      if file_path.end_with? "xlsx"
+        file = Roo::Excelx.new(file_path)
+      else
+        file = Roo::Excel.new(file_path)
+      end
 
-      file = Roo::Excel.new(params["upfile"].path)
       columns = get_file_colums(file.row(1).count)
       values = []
 
